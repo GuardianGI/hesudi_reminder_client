@@ -24,17 +24,17 @@ public class AsyncItemAdapterUpdate extends AsyncTask<List<Item>, List<Item>, Vo
     public AsyncItemAdapterUpdate(GridView gvItems) {
         m_gvItems = gvItems;
     }
-    private static final String m_itemUrl = MyHttpAdapter.serverIp + "items.json";
+    private static final String m_itemPath = "notifications.json";
     String jsonTest = "{data: \\r\\n\t[{name: 'test',\\r\\n\tstatus: 1},\\r\\n\t{name: 'test1',\\r\\n\tstatus: 0},\\r\\n\t{name: 'test2',\\r\\n\tstatus: 0},\\r\\n\t{name: 'test3',\\r\\n\tstatus: 1},\\r\\n\t{name: 'test4',\\r\\n\tstatus: 1},\\r\\n\t{name: 'test5',\\r\\n\tstatus: 0},\\r\\n]}";
-
+    Boolean noLan = false;
     private ArrayList<Item> getItems() {
-        return jsonDecode(jsonTest/*httpRequest(m_serverAddress)*/);
+        return jsonDecode(noLan ? jsonTest : MyHttpAdapter.httpRequest(m_itemPath));
     }
 
     private ArrayList<Item> jsonDecode(String encoded) {
         ArrayList<Item> items = new ArrayList<Item>();
         try {
-            JSONArray jsonItems = (new JSONObject(encoded.replace("\\r\\n", " "))).getJSONArray("data");
+            JSONArray jsonItems = (new JSONArray(encoded.replace("\\r\\n", " ")));
             for (int i = 0; i < jsonItems.length(); ++i) {
                 items.add(new Item(jsonItems.getJSONObject(i)));
             }
@@ -72,7 +72,10 @@ public class AsyncItemAdapterUpdate extends AsyncTask<List<Item>, List<Item>, Vo
         int index = m_gvItems.getFirstVisiblePosition();
 
         m_gvItems.setAdapter(adapter);
-
-        m_gvItems.smoothScrollToPosition(index);
+//        try {
+//            m_gvItems.smoothScrollToPosition(index);
+//        } catch (Exception e) {
+//            //ignore and let it scroll to top.... (for SDK version < 8
+//        }
     }
 }

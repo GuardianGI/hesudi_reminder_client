@@ -11,12 +11,13 @@ public class Item {
     public Integer status;
     public Integer id;
 
-    private String m_deleteUrl = MyHttpAdapter.serverIp + "";
+    private String m_deletePath = "/notifications/%d.json";
 
     public Item(JSONObject jsonItem) {
         try {
-            name = jsonItem.getString("name");
-            status = jsonItem.getInt("status");
+            name = jsonItem.getString("text");
+            status = jsonItem.getInt("status") - 1;
+            id = jsonItem.getInt("id");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -28,6 +29,6 @@ public class Item {
     }
 
     public void snooze() {
-        MyHttpAdapter.httpRequest(m_deleteUrl + id.toString());
+        MyHttpAdapter.httpRequest(String.format(m_deletePath, id), null);
     }
 }
