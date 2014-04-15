@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="red">#F00</color>
-    <color name="green">#0F0</color>
+    <color name="red">#A11</color>
+    <color name="green">#4A4</color>
+    <color name="yellow">#EF4</color>
+
+    <color name="bg">#EEE</color>
+    <color name="bgAlt">#999</color>
 </resources>

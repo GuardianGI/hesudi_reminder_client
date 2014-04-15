@@ -3,8 +3,12 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="100dp"
-    android:padding="5dp">
+    android:layout_height="150dp"
+    android:padding="10dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/item_background"
+    >
+
     <TextView
         android:gravity="center"
         android:layout_centerHorizontal="true"
@@ -14,4 +18,21 @@
         android:id="@+id/txtName"
         android:text="Placeholder name"
         android:textSize="20sp"/>
+    <LinearLayout
+        android:layout_below="@id/txtName"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/llButtonContainer">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnSnooze"
+            android:text="@string/snooze" />
+
+    </LinearLayout>
 </RelativeLayout>

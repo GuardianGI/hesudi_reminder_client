@@ -1,6 +1,7 @@
 package com.hesudi.reminderclient.app;
 
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.GridView;
 
 import org.apache.http.client.methods.HttpGet;
@@ -23,32 +24,11 @@ public class AsyncItemAdapterUpdate extends AsyncTask<List<Item>, List<Item>, Vo
     public AsyncItemAdapterUpdate(GridView gvItems) {
         m_gvItems = gvItems;
     }
-    private static final String m_serverAddress = "localhost:8080";
+    private static final String m_itemUrl = MyHttpAdapter.serverIp + "items.json";
     String jsonTest = "{data: \\r\\n\t[{name: 'test',\\r\\n\tstatus: 1},\\r\\n\t{name: 'test1',\\r\\n\tstatus: 0},\\r\\n\t{name: 'test2',\\r\\n\tstatus: 0},\\r\\n\t{name: 'test3',\\r\\n\tstatus: 1},\\r\\n\t{name: 'test4',\\r\\n\tstatus: 1},\\r\\n\t{name: 'test5',\\r\\n\tstatus: 0},\\r\\n]}";
-    private ArrayList<Item> getSampleData() {
-        ArrayList<Item> items = new ArrayList<Item>();
-        items.add(new Item("Go to bathroom", 0));
-        items.add(new Item("eat", 1));
-        items.add(new Item("go outside", 0));
-        items.add(new Item("sleep", 0));
-        items.add(new Item("feed the cat", 1));
-        items.add(new Item("pet the cat", 0));
-        return items;
-    }
+
     private ArrayList<Item> getItems() {
         return jsonDecode(jsonTest/*httpRequest(m_serverAddress)*/);
-    }
-    private String httpRequest(String url) {
-        try {
-            return EntityUtils.toString(
-                    (new DefaultHttpClient())
-                            .execute(new HttpGet(url))
-                            .getEntity()
-            );
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return httpRequest(url);
     }
 
     private ArrayList<Item> jsonDecode(String encoded) {
@@ -74,7 +54,7 @@ public class AsyncItemAdapterUpdate extends AsyncTask<List<Item>, List<Item>, Vo
                 items = getItems();
                 Integer randomId = r.nextInt(items.size());
                 Item old = items.get(randomId);
-                Item replacement = new Item(old.name, r.nextInt(2));
+                Item replacement = new Item(old.name, r.nextInt(3));
                 items.set(randomId, replacement);
                 publishProgress(items);
                 Thread.sleep(500);
@@ -88,6 +68,11 @@ public class AsyncItemAdapterUpdate extends AsyncTask<List<Item>, List<Item>, Vo
                 updatedItems[updatedItems.length - 1],
                 Main.getInstance(),
                 R.layout.item);
+
+        int index = m_gvItems.getFirstVisiblePosition();
+
         m_gvItems.setAdapter(adapter);
+
+        m_gvItems.smoothScrollToPosition(index);
     }
 }

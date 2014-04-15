@@ -11,6 +11,8 @@ public class Item {
     public Integer status;
     public Integer id;
 
+    private String m_deleteUrl = MyHttpAdapter.serverIp + "";
+
     public Item(JSONObject jsonItem) {
         try {
             name = jsonItem.getString("name");
@@ -23,5 +25,9 @@ public class Item {
     public Item(String name, Integer status) {
         this.name = name;
         this.status = status;
+    }
+
+    public void snooze() {
+        MyHttpAdapter.httpRequest(m_deleteUrl + id.toString());
     }
 }

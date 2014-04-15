@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Main extends ActionBarActivity {
         m_instance = this;
 
         (new AsyncItemAdapterUpdate((GridView) findViewById(R.id.gvMain))).execute();
+        //String test = MyHttpAdapter.httpRequest("");
     }
 
     @Override
@@ -43,5 +45,4 @@ public class Main extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
